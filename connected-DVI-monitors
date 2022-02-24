@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Prints names of connected DVI monitors
+
+xrandr -q |
+grep -w DVI |
+grep -w connected |
+awk -F ' ' '{print$1}'

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# monitor rotation {landscape,portrait}
+mode=$1
+
+sleep 1
+
+# primary monitor
+primary_monitor="$( xrandr -q | grep -w primary | awk -F ' ' '{print$1}' )"
+external_monitor="$( connected-DVI-monitors )"
+
+primary_monitor_settings="--output $primary_monitor --mode 1920x1080 --rotate normal"
+external_monitor_settings="--output $external_monitor --mode 1920x1080 --right-of $primary_monitor"
+
+if [[ "$mode" = "--portrait" ]]; then
+	echo "Setting $external_monitor to $mode mode"
+	xrandr $primary_monitor_settings $external_monitor_settings --rotation left --pos 1920x0 
+#	xrandr $primary_monitor_settings $external_monitor_settings --rotation left --pos 1920x-740 
+#	xrandr $external_monitor_settings --pos 1920x-740
+else
+	echo "Setting $external_monitor to default (landscape) mode"
+	xrandr $primary_monitor_settings $external_monitor_settings --pos 1920x0
+fi
