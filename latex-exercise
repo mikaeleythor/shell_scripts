@@ -1,0 +1,38 @@
+#!/bin/bash
+
+### This script copies and modifies an exercise report template to 
+### $( pwd )/<Exercise Report Title>/<Exercise Report Title>.tex
+ 
+TITLE=$1
+TEMPLATE_DIR='/usr/local/share/latex-exercise/'
+TEMPLATE="$TEMPLATE_DIR"'exercise-template.tex'
+FILE_REL="$TITLE/$TITLE.tex"
+SCHOOL='ITU'
+
+if [[ $TITLE ]]; then
+    mkdir $TITLE
+    touch $FILE_REL
+
+    read -p 'Course title: ' COURSE_TITLE
+    read -p 'Exercise title: ' EXERCISE_TITLE
+
+    if [[ $SCHOOL = 'ITU' ]]; then
+        SCHOOL_NAME='IT University of Copenhagen'
+        STUDENT_NAME='Eythor Mikael Eythorsson'
+        STUDENT_EMAIL='eyey@itu.dk'
+        echo 'this works'
+    # Add else statement for RU later
+    fi
+
+    cat $TEMPLATE |
+        sed "s/EXERCISE_TITLE/$EXERCISE_TITLE/" |
+        sed "s/COURSE_TITLE/$COURSE_TITLE/" |
+        sed "s/SCHOOL_NAME/$SCHOOL_NAME/" |
+        sed "s/STUDENT_NAME/$STUDENT_NAME/" |
+        sed "s/STUDENT_EMAIL/$STUDENT_EMAIL/" > $FILE_REL
+    cp $TEMPLATE_DIR'file-setup.tex' $TITLE 
+    cp $TEMPLATE_DIR'references.bib' $TITLE 
+
+else
+    echo 'No Exercise Report Title specified'
+fi

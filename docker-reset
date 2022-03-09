@@ -1,0 +1,19 @@
+#! /bin/bash
+
+echo WARNING! This script deletes all docker images, containers and volumes GLOBALLY
+echo Continue? [yes/no]
+
+read continue
+
+if [[ "$continue" == "yes" ]]; then
+
+    docker images -q | xargs docker image rm -f
+    docker ps -aq | xargs docker rm -f
+    docker volume prune
+
+    echo Docker has been reset globally
+
+else
+    echo Catastrophy avoided
+
+fi
