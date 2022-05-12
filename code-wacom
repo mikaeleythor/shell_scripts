@@ -6,10 +6,10 @@ ERASER="Wacom Intuos BT S Pen eraser"
 CURSOR="Wacom Intuos BT S Pen cursor"
 MONITOR="DVI-I-1-1"
 
-xrandr --output DVI-I-1-1 --rotate left
-xrandr --output DVI-I-1-1 --right-of eDP-1
-xrandr --output DVI-I-1-1 --pos 1920x0
-xrandr --output DVI-I-1-1 --pos 1920x-740
+xrandr --output $MONITOR --rotate left
+xrandr --output $MONITOR --right-of eDP-1
+xrandr --output $MONITOR --pos 1920x0
+xrandr --output $MONITOR --pos 1920x-740
 
 # Run default Wacom settings
 
