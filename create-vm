@@ -1,0 +1,28 @@
+#!/bin/bash
+# credits to Andrea Fortuna : https://gist.githubusercontent.com/andreafortuna/9c7e342dbff00edefbaebcbfd034193f/raw/7fdb0ba8bd3770571c6b6217a0f3208bc6f85fb9/CreateDebianVM.sh
+
+VM_NAME=$1
+OS_TYPE=$2
+ISO=$3
+VM_DIR="$HOME"/VirtualBox\ VMs/"$VM_NAME"
+
+mkdir ""$VM_DIR""
+
+vboxmanage createvm --name $VM_NAME --ostype $OS_TYPE --register --basefolder "$VM_DIR"
+
+vboxmanage modifyvm $VM_NAME --ioapic on
+vboxmanage modifyvm $VM_NAME ---memory 1024 --vram 128
+vboxmanage modifyvm $VM_NAME ---nic1 nat
+
+createhd --filename "$VM_DIR"/"$VM_NAME"_DISK.vdi --size 80000 --format VDI
+storagectl $VM_NAME --name "SATA Controller" --add sata --controller IntelAhci
+storageattach $VM_NAME --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium "$VM_DIR"/"$VM_NAME"_DISK.vdi
+storagectl $VM_NAME --name "IDE Controller" --add ide --controller PIIX4
+storageattach $VM_NAME --storagectl "IDE Controller" --port 1 --device 0 --type dvddrive --medium $HOME/'VirtualBox VMs'/ISOs/$ISO
+VBoxManage modifyvm $VM_NAME --boot1 dvd --boot2 disk --boot3 none --boot4 none
+#Enable RDP
+VBoxManage modifyvm $VM_NAME --vrde on
+VBoxManage modifyvm $VM_NAME --vrdemulticon on --vrdeport 10001
+
+#Start the VM
+VBoxHeadless --startvm $VM_NAME

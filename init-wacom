@@ -1,22 +1,28 @@
 #!/bin/bash
 
+STYLUS="Wacom Intuos BT S Pen stylus"
+PAD="Wacom Intuos BT S Pad pad"
+ERASER="Wacom Intuos BT S Pen eraser"
+CURSOR="Wacom Intuos BT S Pen cursor"
+MONITOR="DVI-I-1-1"
+
 # Configure pen buttons
-xsetwacom --set "Wacom Intuos BT S Pen stylus" button 1 "button +1"
-xsetwacom --set "Wacom Intuos BT S Pen stylus" button 2 "key shift ctrl r"
-xsetwacom --set "Wacom Intuos BT S Pen stylus" button 3 "key shift ctrl p"
+xsetwacom --set $STYLUS button 1 "button +1"
+xsetwacom --set $STYLUS button 2 "key shift ctrl r"
+xsetwacom --set $STYLUS button 3 "key shift ctrl p"
 
 # Configure pad buttons
-xsetwacom --set "Wacom Intuos BT S Pad pad" button 1 "key del"
-xsetwacom --set "Wacom Intuos BT S Pad pad" button 2 "key +ctrl +v"
-xsetwacom --set "Wacom Intuos BT S Pad pad" button 3 "key ctrl +c"
-xsetwacom --set "Wacom Intuos BT S Pad pad" button 8 "key +ctrl +z"
+xsetwacom --set $PAD button 1 "key del"
+xsetwacom --set $PAD button 2 "key +ctrl +v"
+xsetwacom --set $PAD button 3 "key ctrl +c"
+xsetwacom --set $PAD button 8 "key +ctrl +z"
 
 # Configure pan sensitivity
 
-xsetwacom --set "Wacom Intuos BT S Pen stylus" PanScrollThreshold 400
+xsetwacom --set $STYLUS PanScrollThreshold 400
 
 # Map devices to output
-xsetwacom --set "Wacom Intuos BT S Pen stylus" MapToOutput DVI-I-1-1
-xsetwacom --set "Wacom Intuos BT S Pad pad" MapToOutput DVI-I-1-1
-xsetwacom --set "Wacom Intuos BT S Pen eraser" MapToOutput DVI-I-1-1
-xsetwacom --set "Wacom Intuos BT S Pen cursor" MapToOutput DVI-I-1-1
+xsetwacom --set $STYLUS MapToOutput $MONITOR
+xsetwacom --set $PAD MapToOutput $MONITOR
+xsetwacom --set $ERASER MapToOutput $MONITOR
+xsetwacom --set $CURSOR MapToOutput $MONITOR
