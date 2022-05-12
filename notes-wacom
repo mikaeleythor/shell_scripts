@@ -1,0 +1,21 @@
+#!/bin/bash
+
+STYLUS="Wacom Intuos BT S Pen stylus"
+PAD="Wacom Intuos BT S Pad pad"
+ERASER="Wacom Intuos BT S Pen eraser"
+CURSOR="Wacom Intuos BT S Pen cursor"
+MONITOR="DVI-I-1-1"
+
+xrandr --output $MONITOR --rotate normal
+xrandr --output $MONITOR --right-of eDP-1
+xrandr --output $MONITOR --pos 1920x0
+
+# Map devices to output
+xsetwacom --set $STYLUS MapToOutput $MONITOR
+xsetwacom --set $PAD MapToOutput $MONITOR
+xsetwacom --set $ERASER MapToOutput $MONITOR
+xsetwacom --set $CURSOR MapToOutput $MONITOR
+
+# Run default Wacom settings
+
+init-wacom
